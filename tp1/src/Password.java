@@ -1,6 +1,8 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,9 +108,13 @@ public class Password {
      */
     public static HashMap<String, Boolean> checkPasswordsList(ArrayList<String> passwords) {
 
-        // Code here
+        HashMap<String, Boolean> result = new HashMap<>();
 
-        return null;
+        for (String password : passwords) {
+            result.put(password, isStrongPassword(password));
+        }
+
+        return result;
     }
 
     /**
@@ -124,10 +130,37 @@ public class Password {
      * @return A randomly generated password that meets the security criteria.
      */
     public static String generatePassword(int nbCar) {
+        if (nbCar < 4) {
+            throw new IllegalArgumentException(
+                    "Password length must be at least 4 to include all required character types.");
+        }
 
-        // Code here
+        String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        String digits = "0123456789";
+        String specialCharacters = "!@#$%^&*()-_=+";
 
-        return null;
+        SecureRandom random = new SecureRandom();
+        List<Character> password = new ArrayList<>();
+
+        password.add(upperCase.charAt(random.nextInt(upperCase.length())));
+        password.add(lowerCase.charAt(random.nextInt(lowerCase.length())));
+        password.add(digits.charAt(random.nextInt(digits.length())));
+        password.add(specialCharacters.charAt(random.nextInt(specialCharacters.length())));
+
+        String allCharacters = upperCase + lowerCase + digits + specialCharacters;
+        for (int i = 0; i < nbCar - 4; i++) {
+            password.add(allCharacters.charAt(random.nextInt(allCharacters.length())));
+        }
+
+        Collections.shuffle(password);
+
+        StringBuilder paswwordString = new StringBuilder();
+        for (char c : password) {
+            paswwordString.append(c);
+        }
+
+        return paswwordString.toString();
     }
 
     public static void main(String[] args) {
