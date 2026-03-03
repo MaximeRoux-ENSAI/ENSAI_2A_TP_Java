@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -10,9 +12,36 @@ public class Login {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.print("Entrer un username : ");
+            String username = scanner.nextLine();
 
-            // Code here
+            if (!userDatabase.containsKey(username)) {
+                System.out.println("Erreur : utilisateur introuvable");
+                continue;
+            }
+
+            int nbEssai = 3;
+
+            while (nbEssai > 0) {
+                System.out.println("Entrer votre mot de passe :");
+                String mdp = scanner.nextLine();
+                String hashMdp = hashPassword(mdp);
+
+                if (hashMdp.equals(userDatabase.get(username))) {
+                    System.out.println("Connexion réussie !");
+                    scanner.close();
+                    return;
+                }
+                nbEssai--;
+                if (nbEssai > 0) {
+                    System.out.println("Mot de passe incorrect. Il vous reste " + nbEssai + " essais.");
+                } else {
+                    System.out.println("Mot de passe incorrect, réessayer du début");
+                }
+
+            }
         }
+
     }
 
     /**
@@ -39,5 +68,22 @@ public class Login {
             System.out.println("Error loading file: " + e.getMessage());
         }
         return userDatabase;
+    }
+
+    public static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = md.digest(password.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1)
+                    hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing password", e);
+        }
     }
 }
