@@ -4,6 +4,13 @@ public class Main {
 
         public static void main(String[] args) {
 
+                String bookspath = "books.csv";
+
+                Library library = new Library("ENSAI Library");
+                library.loadBooksFromCSV(bookspath);
+
+                library.displayBooks();
+
                 Author tolkien = new Author("J.R.R. Tolkien", 81, "UK");
 
                 Book fellowshipOfTheRing = new Book(
