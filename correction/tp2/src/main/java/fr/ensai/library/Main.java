@@ -1,6 +1,10 @@
 package fr.ensai.library;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.util.List;
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +23,11 @@ public class Main {
         System.out.println("* Books by Stephen King                      *");
         System.out.println("**********************************************");
 
+<<<<<<< HEAD
         ArrayList<Book> skingsBooks = library.getBooksByAuthor(new Author("Stephen King"));
+=======
+        List<Book> skingsBooks = library.getBooksByAuthor(new Author("Stephen King"));
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
 
         for (Book b : skingsBooks) {
             System.out.println(b);

@@ -17,7 +17,13 @@ public class Library {
     private List<Loan> activeLoans;
     private List<Loan> completedLoans;
 
+<<<<<<< HEAD
     // Constructor
+=======
+    /**
+     * Constructs a new Library object.
+     */
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
     public Library(String name) {
         this.name = name;
         this.items = new ArrayList<>();
@@ -27,17 +33,26 @@ public class Library {
 
     // Method to add a book to the library's collection
     public void addIem(Item item) {
+<<<<<<< HEAD
         items.add(item);
     }
 
     public List<Loan> getActiveLoans() {
         return activeLoans;
+=======
+        this.items.add(item);
+    }
+
+    public List<Loan> getActiveLoans() {
+        return this.activeLoans;
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
     }
 
     /**
      * Displays all items currently present in the library.
      */
     public void displayItems() {
+<<<<<<< HEAD
 
         System.out.println("\n**********************************************");
         System.out.println("* All items                                  *");
@@ -49,6 +64,27 @@ public class Library {
                 System.out.println(item);
             }
         }
+=======
+        if (this.items.isEmpty()) {
+            System.out.println("\n[!] The library is empty.");
+            return;
+        }
+
+        String rowFormat = "| %-10s | %-50s |%n";
+        String separator = "+------------+----------------------------------------------------+";
+
+        System.out.println("\n" + separator);
+        System.out.printf(rowFormat, "Type", "Title");
+        System.out.println(separator);
+
+        for (Item item : this.items) {
+            System.out.printf(rowFormat,
+                    item.getClass().getSimpleName(),
+                    item.getTitle());
+        }
+
+        System.out.println(separator);
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
     }
 
     /**
@@ -57,6 +93,7 @@ public class Library {
      * @param author The author whose books are to be found.
      * @return A list of books written by the given author.
      */
+<<<<<<< HEAD
     public ArrayList<Book> getBooksByAuthor(Author author) {
         ArrayList<Book> result = new ArrayList<>();
         for (Item item : items) {
@@ -65,6 +102,13 @@ public class Library {
                 if (book.getAuthor().equals(author)) {
                     result.add(book);
                 }
+=======
+    public List<Book> getBooksByAuthor(Author author) {
+        ArrayList<Book> result = new ArrayList<>();
+        for (Item item : items) {
+            if (item instanceof Book book && book.getAuthor().equals(author)) {
+                result.add(book);
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
             }
         }
         return result;
@@ -77,8 +121,13 @@ public class Library {
      * @return The Loan object if the item is currently loaned out, otherwise null.
      */
     public Loan findActiveLoanForItem(Item item) {
+<<<<<<< HEAD
         if (activeLoans != null) {
             for (Loan loan : activeLoans) {
+=======
+        if (this.activeLoans != null) {
+            for (Loan loan : this.activeLoans) {
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
                 if (loan.getItem().equals(item)) {
                     return loan;
                 }
@@ -95,12 +144,20 @@ public class Library {
      * @return true if the loan was successful, false otherwise.
      */
     public boolean loanItem(Item item, Student student) {
+<<<<<<< HEAD
         if (item == null || student == null || findActiveLoanForItem(item) != null) {
+=======
+        if (item == null || student == null || this.findActiveLoanForItem(item) != null) {
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
             return false;
         }
 
         Loan newLoan = new Loan(item, student, new Date());
+<<<<<<< HEAD
         activeLoans.add(newLoan);
+=======
+        this.activeLoans.add(newLoan);
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
         return true;
     }
 
@@ -117,7 +174,11 @@ public class Library {
             return false;
         }
 
+<<<<<<< HEAD
         Loan loanToRender = findActiveLoanForItem(item);
+=======
+        Loan loanToRender = this.findActiveLoanForItem(item);
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
 
         if (loanToRender == null) {
             return false;
@@ -125,8 +186,13 @@ public class Library {
 
         // Add returnDate and Move loan from activeLoans to completedLoans
         loanToRender.setReturnDate(new Date());
+<<<<<<< HEAD
         activeLoans.remove(loanToRender);
         completedLoans.add(loanToRender);
+=======
+        this.activeLoans.remove(loanToRender);
+        this.completedLoans.add(loanToRender);
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
 
         return true;
     }
@@ -162,7 +228,11 @@ public class Library {
                     if (author == null) {
                         author = new Author(authorName);
                         authors.put(authorName, author);
+<<<<<<< HEAD
                         System.out.println(author.toString());
+=======
+                        // System.out.println(String.format("Create %s", author));
+>>>>>>> dd8a231b0c3fe8d317f6cb28620f2bd9867f27de
                     }
                     Book book = new Book(isbn, title, author, year, pageCount);
 
