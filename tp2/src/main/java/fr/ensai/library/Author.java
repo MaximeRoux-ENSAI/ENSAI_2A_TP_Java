@@ -21,6 +21,14 @@ public class Author {
         this.nationality = nationality;
     }
 
+    /**
+     * Constructor with only the name.
+     */
+    public Author(String name) {
+        this.name = name;
+        this.nationality = "Unknown";
+    }
+
     public String getName() {
         return this.name;
     }
