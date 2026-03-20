@@ -1,37 +1,39 @@
 package fr.ensai.mediaplayer;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Represents a song with essential attributes.
  */
-public class Song {
-    private String singer;
-    private String title;
-    private int year;
-    private int duration;
+public class Song extends Media {
+    private Artist singer;
     private String lyrics;
-    private String author;
-    private String composer;
+    private Artist author;
+    private Artist composer;
+    private List<MusicalGenre> genres;
 
     /**
      * Constructs a new Song object.
      *
      * @param title    The title of the song.
      * @param singer   The singer of the song.
-     * @param title    The title of the song.
      * @param year     The year the song was released.
      * @param duration The duration of the song in seconds.
      * @param lyrics   The lyrics of the song.
      * @param author   The author of the song.
      * @param composer The composer of the song.
+     * @param genres   The list of musical genres for the song.
      */
-    public Song(String title, String singer, int year, int duration, String lyrics, String author, String composer) {
-        this.title = title;
+    public Song(String title, Artist singer, int year, int duration, String lyrics, Artist author, Artist composer,
+            List<MusicalGenre> genres) {
+
+        super(title, duration, year);
         this.singer = singer;
-        this.year = year;
-        this.duration = duration;
         this.lyrics = lyrics;
         this.author = author;
         this.composer = composer;
+        this.genres = genres;
     }
 
     /**
@@ -63,4 +65,33 @@ public class Song {
         return Objects.hash(this.title, this.singer, this.year);
     }
 
+
+    /**
+     * Simulates playing the song by printing lyrics word by word.
+     */
+    public void play() {
+        if (lyrics == null || lyrics.isEmpty()) {
+            System.out.println("No lyrics available.");
+            return;
+        }
+
+        String[] words = lyrics.split(" ");
+
+        for (String word : words) {
+            System.out.print(word + " ");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("Playback interrupted.");
+            }
+        }
+
+        System.out.println(); // retour à la ligne à la fin
+    }
+
+    @Override
+    public String getText() {
+        return this.lyrics;
+    }
 }
